@@ -6,7 +6,7 @@ class BudgetManager {
         return this.#totalBudget;
     }
 
-    getEnvelopes() {
+    getAllEnvelopes() {
         return this.#envelopes;
     }
 
