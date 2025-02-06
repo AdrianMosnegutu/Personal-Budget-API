@@ -5,6 +5,7 @@ const {
     getEnvelope,
     envelopeIdParam,
     updateEnvelope,
+    deleteEnvelope,
 } = require("../controllers/envelopesController.cjs");
 const {
     validateEnvelope,
@@ -25,5 +26,8 @@ envelopesRoute.post("/", validateEnvelope, createEnvelope);
 
 // PATCH
 envelopesRoute.patch("/:envelopeId", validatePartialEnvelope, updateEnvelope);
+
+// DELETE
+envelopesRoute.delete("/:envelopeId", deleteEnvelope);
 
 module.exports = envelopesRoute;

@@ -27,6 +27,13 @@ class BudgetManager {
         Object.assign(this.#envelopes[index], envelopeData);
         return this.#envelopes[index];
     }
+
+    deleteEnvelope(id) {
+        const index = this.#envelopes.findIndex(
+            (envelope) => envelope.id === id,
+        );
+        this.#envelopes.splice(index, 1);
+    }
 }
 
 let envelopeId = 1;

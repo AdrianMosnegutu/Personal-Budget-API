@@ -44,10 +44,17 @@ function updateEnvelope(req, res) {
     res.send(updatedEnvelope);
 }
 
+function deleteEnvelope(req, res) {
+    const envelopeId = req.envelope.id;
+    manager.deleteEnvelope(envelopeId);
+    res.status(204).send();
+}
+
 module.exports = {
     envelopeIdParam,
     getAllEnvelopes,
     createEnvelope,
     getEnvelope,
     updateEnvelope,
+    deleteEnvelope,
 };
