@@ -19,6 +19,14 @@ class BudgetManager {
         this.#envelopes.push(newEnvelope);
         return newEnvelope;
     }
+
+    updateEnvelope(id, envelopeData) {
+        const index = this.#envelopes.findIndex(
+            (envelope) => envelope.id === id,
+        );
+        Object.assign(this.#envelopes[index], envelopeData);
+        return this.#envelopes[index];
+    }
 }
 
 let envelopeId = 1;

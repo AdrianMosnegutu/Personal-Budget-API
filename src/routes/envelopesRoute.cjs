@@ -4,8 +4,12 @@ const {
     getAllEnvelopes,
     getEnvelope,
     envelopeIdParam,
+    updateEnvelope,
 } = require("../controllers/envelopesController.cjs");
-const { validateEnvelope } = require("../middleware/middleware.cjs");
+const {
+    validateEnvelope,
+    validatePartialEnvelope,
+} = require("../middleware/middleware.cjs");
 
 const envelopesRoute = express.Router();
 
@@ -18,5 +22,8 @@ envelopesRoute.get("/:envelopeId", getEnvelope);
 
 // POST
 envelopesRoute.post("/", validateEnvelope, createEnvelope);
+
+// PATCH
+envelopesRoute.patch("/:envelopeId", validatePartialEnvelope, updateEnvelope);
 
 module.exports = envelopesRoute;

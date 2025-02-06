@@ -36,9 +36,18 @@ function createEnvelope(req, res) {
     res.status(201).send(newEnelope);
 }
 
+function updateEnvelope(req, res) {
+    const envelopeId = req.envelope.id;
+    const envelopeData = req.body;
+
+    const updatedEnvelope = manager.updateEnvelope(envelopeId, envelopeData);
+    res.send(updatedEnvelope);
+}
+
 module.exports = {
     envelopeIdParam,
     getAllEnvelopes,
     createEnvelope,
     getEnvelope,
+    updateEnvelope,
 };
