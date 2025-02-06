@@ -1,4 +1,5 @@
 const BudgetManager = require("../services/BudgetManager.cjs");
+const STATUS_CODE = require("../utils/status-codes.cjs");
 const manager = new BudgetManager();
 
 function envelopeIdParam(req, _res, next, id) {
@@ -6,7 +7,7 @@ function envelopeIdParam(req, _res, next, id) {
 
     if (Number.isNaN(envelopeId)) {
         const err = new Error("Envelope ID must be an integer!");
-        err.status = 400;
+        err.status = STATUS_CODE.BAD_REQUEST;
         return next(err);
     }
 
@@ -14,11 +15,16 @@ function envelopeIdParam(req, _res, next, id) {
 
     if (!envelope) {
         const err = new Error(`Envelope with id ${envelopeId} does not exist!`);
-        err.status = 404;
+        err.status = STATUS_CODE.NOT_FOUND;
         return next(err);
     }
 
-    req.envelope = envelope;
+    if (!req.envelope1) {
+        req.envelope1 = envelope;
+    } else {
+        req.envelope2 = envelope;
+    }
+
     next();
 }
 
@@ -27,17 +33,32 @@ function getAllEnvelopes(_req, res) {
 }
 
 function getEnvelope(req, res) {
-    res.send(req.envelope);
+    res.send(req.envelope1);
 }
 
 function createEnvelope(req, res) {
     const { category, budget } = req.body;
     const newEnelope = manager.addEnvelope(category, budget);
-    res.status(201).send(newEnelope);
+    res.status(STATUS_CODE.CREATED).send(newEnelope);
+}
+
+function transferBudget(req, res) {
+    const fromId = req.envelope1.id;
+    const toId = req.envelope2.id;
+
+    const { amount } = req.body;
+    const transferAmount = Number(amount);
+
+    const updatedEnvelope = manager.transferBudget(
+        fromId,
+        toId,
+        transferAmount,
+    );
+    res.send(updatedEnvelope);
 }
 
 function updateEnvelope(req, res) {
-    const envelopeId = req.envelope.id;
+    const envelopeId = req.envelope1.id;
     const envelopeData = req.body;
 
     const updatedEnvelope = manager.updateEnvelope(envelopeId, envelopeData);
@@ -45,9 +66,9 @@ function updateEnvelope(req, res) {
 }
 
 function deleteEnvelope(req, res) {
-    const envelopeId = req.envelope.id;
+    const envelopeId = req.envelope1.id;
     manager.deleteEnvelope(envelopeId);
-    res.status(204).send();
+    res.status(STATUS_CODE.NO_CONTENT).send();
 }
 
 module.exports = {
@@ -55,6 +76,7 @@ module.exports = {
     getAllEnvelopes,
     createEnvelope,
     getEnvelope,
+    transferBudget,
     updateEnvelope,
     deleteEnvelope,
 };

@@ -24,6 +24,7 @@ class BudgetManager {
         const index = this.#envelopes.findIndex(
             (envelope) => envelope.id === id,
         );
+
         Object.assign(this.#envelopes[index], envelopeData);
         return this.#envelopes[index];
     }
@@ -32,7 +33,23 @@ class BudgetManager {
         const index = this.#envelopes.findIndex(
             (envelope) => envelope.id === id,
         );
+
         this.#envelopes.splice(index, 1);
+    }
+
+    transferBudget(idFrom, idTo, amount) {
+        const indexFrom = this.#envelopes.findIndex(
+            (envelope) => envelope.id === idFrom,
+        );
+
+        const indexTo = this.#envelopes.findIndex(
+            (envelope) => envelope.id === idTo,
+        );
+
+        this.#envelopes[indexFrom].budget -= amount;
+        this.#envelopes[indexTo].budget += amount;
+
+        return this.#envelopes[indexTo];
     }
 }
 
