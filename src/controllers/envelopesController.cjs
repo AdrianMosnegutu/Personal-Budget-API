@@ -1,8 +1,33 @@
 const BudgetManager = require("../services/BudgetManager.cjs");
 const manager = new BudgetManager();
 
+function envelopeIdParam(req, _res, next, id) {
+    const envelopeId = Number(id);
+
+    if (Number.isNaN(envelopeId)) {
+        const err = new Error("Envelope ID must be an integer!");
+        err.status = 400;
+        return next(err);
+    }
+
+    const envelope = manager.getEnvelope(envelopeId);
+
+    if (!envelope) {
+        const err = new Error(`Envelope with id ${envelopeId} does not exist!`);
+        err.status = 404;
+        return next(err);
+    }
+
+    req.envelope = envelope;
+    next();
+}
+
 function getAllEnvelopes(_req, res) {
     res.send(manager.getAllEnvelopes());
+}
+
+function getEnvelope(req, res) {
+    res.send(req.envelope);
 }
 
 function createEnvelope(req, res) {
@@ -11,4 +36,9 @@ function createEnvelope(req, res) {
     res.status(201).send(newEnelope);
 }
 
-module.exports = { getAllEnvelopes, createEnvelope };
+module.exports = {
+    envelopeIdParam,
+    getAllEnvelopes,
+    createEnvelope,
+    getEnvelope,
+};

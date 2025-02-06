@@ -10,6 +10,10 @@ class BudgetManager {
         return this.#envelopes;
     }
 
+    getEnvelope(id) {
+        return this.#envelopes.find((envelope) => envelope.id === id);
+    }
+
     addEnvelope(category, budget) {
         const newEnvelope = envelopeFactory(category, budget);
         this.#envelopes.push(newEnvelope);
