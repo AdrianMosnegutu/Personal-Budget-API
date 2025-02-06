@@ -8,12 +8,18 @@
     "main": "src/server.cjs",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "nodemon src/server.cjs"
+        "dev": "clear; nodemon src/server.cjs"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
         "eslint": "^9.19.0",
         "globals": "^15.14.0",
         "nodemon": "^3.1.9"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.3",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "morgan": "^1.10.0"
     }
 }
