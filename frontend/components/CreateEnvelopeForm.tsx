@@ -1,7 +1,7 @@
 import { createEnvelope } from "@/services/api-manager";
 import { EnvelopeResponse } from "@/types/api-types";
 import { Dispatch, SetStateAction } from "react";
-import EnvelopeFormBase from "./EnvelopeFormBase";
+import EnvelopeForm from "./EnvelopeForm";
 import { EnvelopeBase } from "@/types/base-types";
 
 interface Props {
@@ -24,11 +24,11 @@ export default function CreateEnvelopeForm({ setEnvelopes }: Props) {
   }
 
   return (
-    <EnvelopeFormBase
+    <EnvelopeForm
       initialCategory={"category"}
       initialBudget={1}
       formSubitLogic={createEnvelopeLogic}
-      resetForm
+      resetOnSubmit
     />
   );
 }

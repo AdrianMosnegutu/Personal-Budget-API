@@ -1,7 +1,7 @@
 import { modifyEnvelope } from "@/services/api-manager";
 import { EnvelopeResponse } from "@/types/api-types";
 import { Dispatch, SetStateAction } from "react";
-import EnvelopeFormBase from "./EnvelopeFormBase";
+import EnvelopeForm from "./EnvelopeForm";
 import { EnvelopeBase } from "@/types/base-types";
 
 interface Props {
@@ -28,7 +28,7 @@ export default function ModifyEnvelopeForm({
   }
 
   return (
-    <EnvelopeFormBase
+    <EnvelopeForm
       initialCategory={initialEnvelope.category}
       initialBudget={initialEnvelope.budget}
       formSubitLogic={modifyEnvelopeLogic}

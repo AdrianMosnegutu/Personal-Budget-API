@@ -5,14 +5,14 @@ interface Props {
   initialCategory: string;
   initialBudget: number;
   formSubitLogic: (envelope: EnvelopeBase) => Promise<void>;
-  resetForm?: boolean;
+  resetOnSubmit?: boolean;
 }
 
-export default function EnvelopeFormBase({
+export default function EnvelopeForm({
   initialCategory,
   initialBudget,
   formSubitLogic,
-  resetForm,
+  resetOnSubmit,
 }: Props) {
   const [category, setCategory] = useState(initialCategory);
   const [budget, setBudget] = useState(initialBudget);
@@ -31,7 +31,7 @@ export default function EnvelopeFormBase({
     e.preventDefault();
     formSubitLogic({ category, budget });
 
-    if (resetForm) {
+    if (resetOnSubmit) {
       setCategory("category");
       setBudget(1);
     }
