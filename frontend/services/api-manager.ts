@@ -1,6 +1,7 @@
 import { EnvelopeResponse, ErrorResponse } from "@/types/api-types";
 import { EnvelopeBase } from "@/types/base-types";
 import axios from "axios";
+import { getErrorMessage } from "./helpers";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
@@ -12,7 +13,7 @@ async function getEnvelopes(): Promise<EnvelopeResponse[] | ErrorResponse> {
     return response.data as EnvelopeResponse[];
   } catch (err) {
     return {
-      errorMessage: err instanceof Error ? err.message : "Unkown error",
+      errorMessage: getErrorMessage(err),
     };
   }
 }
@@ -27,7 +28,7 @@ async function createEnvelope(
     return response.data as EnvelopeResponse;
   } catch (err) {
     return {
-      errorMessage: err instanceof Error ? err.message : "Unkown error",
+      errorMessage: getErrorMessage(err),
     };
   }
 }
@@ -40,7 +41,7 @@ async function deleteEnvelope(id: number): Promise<ErrorResponse | null> {
     return null;
   } catch (err) {
     return {
-      errorMessage: err instanceof Error ? err.message : "Unkown error",
+      errorMessage: getErrorMessage(err),
     };
   }
 }
@@ -56,7 +57,7 @@ async function modifyEnvelope(
     return response.data;
   } catch (err) {
     return {
-      errorMessage: err instanceof Error ? err.message : "Unkown error",
+      errorMessage: getErrorMessage(err),
     };
   }
 }

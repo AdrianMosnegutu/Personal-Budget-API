@@ -2,6 +2,7 @@ import { deleteEnvelope } from "@/services/api-manager";
 import { EnvelopeResponse } from "@/types/api-types";
 import { Dispatch, SetStateAction, useState } from "react";
 import ModifyEnvelopeForm from "./ModifyEnvelopeForm";
+import { getErrorMessage } from "@/services/helpers";
 
 interface Props {
   envelope: EnvelopeResponse;
@@ -26,7 +27,7 @@ export default function Envelope({
 
       setEnvelopes((prev) => prev.filter((item) => item.id !== envelope.id));
     } catch (err) {
-      console.error(err instanceof Error ? err.message : "Unkown error");
+      console.error(getErrorMessage(err));
     }
   }
 

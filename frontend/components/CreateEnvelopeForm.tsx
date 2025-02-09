@@ -3,6 +3,7 @@ import { EnvelopeResponse } from "@/types/api-types";
 import { Dispatch, SetStateAction } from "react";
 import EnvelopeForm from "./EnvelopeForm";
 import { EnvelopeBase } from "@/types/base-types";
+import { getErrorMessage } from "@/services/helpers";
 
 interface Props {
   setEnvelopes: Dispatch<SetStateAction<EnvelopeResponse[]>>;
@@ -19,7 +20,7 @@ export default function CreateEnvelopeForm({ setEnvelopes }: Props) {
         setEnvelopes((prev) => [...prev, newEnvelope]);
       }
     } catch (err) {
-      console.error(err instanceof Error ? err.message : "Unkown error");
+      console.error(getErrorMessage(err));
     }
   }
 
